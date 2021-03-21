@@ -1,0 +1,96 @@
+//LEETCODE HARD:85
+
+//CODE:
+
+
+class Solution
+{
+public:
+    void Nearest_smallest_left(vector<int>& left,vector<int> & heights)
+    {
+        stack<pair<int,int>>s;
+        for(int i=0;i<heights.size();i++)
+        {
+            while(!s.empty() && s.top().first>=heights[i])
+            {
+                s.pop();
+            }
+            if(s.empty())
+            {
+                left.push_back(-1);
+            }
+            else 
+                left.push_back(s.top().second);
+                
+             s.push({heights[i],i});   
+        }
+    }
+    void Nearest_smallest_right(vector<int>& right,vector<int> & heights)
+    {
+       stack<pair<int,int>>s1;
+        for(int i=heights.size()-1;i>=0;i--)
+        {
+            while(!s1.empty() && s1.top().first>=heights[i])
+            {
+                s1.pop();
+            }
+            if(s1.empty())
+            {
+                right.push_back(heights.size());
+            }
+            else 
+            right.push_back(s1.top().second);
+                
+            s1.push({heights[i],i});   
+        }
+        
+        reverse(right.begin(),right.end());
+    }
+    
+    int largestRectangleArea(vector<int>& heights)
+    {   
+        
+        vector<int> left;    //nearest_smallest_from left;
+        vector<int> right;   //neatest_smallest_from right;
+        Nearest_smallest_left(left,heights);
+        Nearest_smallest_right(right,heights);
+      
+        int area=0;
+      
+        
+        for(int i=0;i<heights.size();i++)
+        {
+            area=max(area,(heights[i]*(right[i]-left[i]-1)));
+           
+        }
+        
+        return area;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix)
+    {
+        if(matrix.size() == 0) return 0;
+        vector<int> v(matrix[0].size(),0);
+        
+        int n=matrix.size();
+        int m=matrix[0].size();
+        
+        
+        int mx= 0;
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+              if(matrix[i][j]=='0')
+              {
+                  v[j]=0;
+              }
+                else 
+                    v[j]=v[j]+(matrix[i][j]-'0');
+            }
+            mx = max( mx , largestRectangleArea(v) );
+        }
+        return mx;
+        
+    }
+};
