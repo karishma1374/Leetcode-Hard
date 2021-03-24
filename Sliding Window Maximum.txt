@@ -9,9 +9,9 @@ public:
         int i=0;
         int j=0;
         vector<int>ans;
-        list<int>l;
+        list<int>l; 
         
-        while(j<nums.size())
+        while(j< nums.size())
         {
             while(l.size()>0 && l.back()<nums[j])
             {
