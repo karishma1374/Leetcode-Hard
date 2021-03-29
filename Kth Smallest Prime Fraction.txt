@@ -1,0 +1,31 @@
+/*
+786 : Medium
+
+Using Max heap(Priority_queue)
+ 
+Code
+
+/*
+
+typedef pair<double,pair<int,int>> pr; //define the type of elements to store in heap 
+class Solution {
+public:
+    vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k)
+    {
+     priority_queue<pr> maxh;
+     for(int i=0;i<arr.size();i++)
+     {
+         for(int j=i+1;j<arr.size();j++)
+         {
+             maxh.push({(double)arr[i]/arr[j],{arr[i],arr[j]}});
+         
+              if(maxh.size()>k)
+                {
+                    maxh.pop();
+                }
+         }
+     }
+        
+      return vector<int>{maxh.top().second.first,maxh.top().second.second};
+    }
+};
