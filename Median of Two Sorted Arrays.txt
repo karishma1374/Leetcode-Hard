@@ -1,0 +1,27 @@
+/*
+as simple as that : naive approach 
+push both the arrays nums1 and nums2 ine by one into the result arr , find whether the length is even or odd ,work accordingly 
+
+*/
+
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        
+        vector<int>ans(nums1); 
+        for(int j=0 ; j<nums2.size() ; j++)
+        ans.push_back(nums2[j]);
+        
+        sort(ans.begin() , ans.end());
+        
+        int k = ans.size();
+        if(k % 2 != 0)
+            return double(ans[k / 2 ]);
+        else
+            return  double((ans[k / 2] + ans[ (k / 2) - 1] )) / 2;  
+    }
+};
+
+
+//there are other efficient approaches as well , learn them and add here !
